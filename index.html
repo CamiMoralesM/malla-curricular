@@ -17,6 +17,7 @@
       --text-main: #8D4F74;
       --text-light: #BA7B9A;
       --checked: #f7a8b8cc;
+      --checked-border: #A77EB3;
     }
     body {
       margin: 0;
@@ -49,33 +50,27 @@
       font-weight: 500;
       color: #FFF0F7;
     }
-
-    .main-content-scroll {
-      overflow-x: auto;
-      max-width: 100vw;
-      padding: 36px 0 0 0;
-    }
-    .years-row {
+    .main-content-col {
+      max-width: 1200px;
+      margin: 45px auto 0 auto;
       display: flex;
-      gap: 45px;
-      min-width: 1200px;
-      justify-content: flex-start;
-      align-items: flex-start;
-      padding: 0 40px;
+      flex-direction: column;
+      gap: 46px;
+      padding: 0 12px;
     }
-    .year-column {
-      min-width: 400px;
+    .year-block {
       background: var(--card);
       border-radius: 28px;
       box-shadow: 0 4px 22px var(--shadow);
-      padding: 24px;
+      padding: 24px 32px 32px 32px;
       display: flex;
       flex-direction: column;
-      gap: 13px;
+      gap: 20px;
       border: 2px solid var(--primary);
+      align-items: flex-start;
     }
     .year-title {
-      font-size: 1.35rem;
+      font-size: 1.4rem;
       color: var(--secondary);
       margin-bottom: 12px;
       display: flex;
@@ -83,14 +78,18 @@
       gap: 11px;
       font-weight: 600;
       letter-spacing: 1px;
-      justify-content: center;
+    }
+    .year-title i {
+      color: var(--primary);
+      font-size: 1.15em;
     }
     .bimestres-row {
       display: flex;
-      gap: 18px;
-      margin-bottom: 12px;
+      gap: 22px;
+      margin-bottom: 0;
       flex-wrap: nowrap;
       overflow-x: auto;
+      width: 100%;
     }
     .bimestre-card {
       background: var(--background);
@@ -137,23 +136,29 @@
       box-shadow: 0 1px 6px var(--shadow);
       width: 100%;
       transition: background 0.2s, color 0.2s, border 0.2s;
+      cursor: pointer;
       position: relative;
-      cursor: pointer;
-    }
-    .subject input[type="checkbox"] {
-      accent-color: var(--primary);
-      margin-right: 6px;
-      width: 18px;
-      height: 18px;
-      cursor: pointer;
-      flex-shrink: 0;
+      user-select: none;
     }
     .subject.checked {
       background: var(--checked);
       color: var(--secondary);
-      border: 1.5px solid var(--secondary);
+      border: 1.5px solid var(--checked-border);
       text-decoration: line-through;
       opacity: 0.75;
+      box-shadow: 0 2px 12px #f7a8b837;
+    }
+    .subject .checkmark {
+      position: absolute;
+      right: 18px;
+      font-size: 1.13em;
+      color: var(--secondary);
+      opacity: 0.84;
+      pointer-events: none;
+      display: none;
+    }
+    .subject.checked .checkmark {
+      display: inline;
     }
     .icon {
       color: var(--secondary);
@@ -227,41 +232,30 @@
       color: var(--primary);
     }
     @media (max-width: 900px) {
-      .main-content-scroll {
-        padding: 16px 0 0 0;
-      }
-      .years-row {
-        flex-direction: column;
-        min-width: unset;
-        gap: 30px;
+      .main-content-col {
         padding: 0 2vw;
       }
-      .year-column {
-        min-width: unset;
-        width: 98vw;
-      }
       .bimestres-row {
-        flex-direction: row;
-        flex-wrap: nowrap;
         gap: 12px;
         overflow-x: auto;
       }
       .bimestre-card {
-        min-width: 195px;
+        min-width: 180px;
         padding: 10px 6px;
+      }
+      .year-block {
+        padding: 18px 6vw 22px 6vw;
       }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1><i class="fa-solid fa-graduation-cap"></i> Analista Programador <span style="font-size:1.2rem;">(Iplacex)</span></h1>
+    <h1><i class="fa-solid fa-graduation-cap"></i> Analista Programador <span style="font-size:1.2rem;"></span></h1>
   </header>
 
-  <div class="main-content-scroll">
-    <div class="years-row" id="malla-curricular">
-      <!-- El JS genera aquí los años y bimestres -->
-    </div>
+  <div class="main-content-col" id="malla-curricular">
+    <!-- JS renderiza aquí los años (uno sobre el otro) y los bimestres en fila horizontal -->
   </div>
 
   <section class="diploma-section">
@@ -274,7 +268,6 @@
       <li class="diploma-item"><i class="fa-solid fa-paint-brush icon"></i> Diseño Frontend</li>
     </ul>
   </section>
-  
   <script>
     // Estructura de la malla y sus íconos
     const malla = [
@@ -365,8 +358,8 @@
       }
     ];
 
-    // Utilidades para guardar y cargar estado de los checkboxes
-    const STORAGE_KEY = "malla-curricular-checks";
+    // Utilidad para guardar/cargar estado de los ramos realizados
+    const STORAGE_KEY = "malla-curricular-tick";
     function getEstadoRamos() {
       try {
         return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
@@ -378,21 +371,21 @@
       localStorage.setItem(STORAGE_KEY, JSON.stringify(estado));
     }
 
-    // Renderizado de la malla
+    // Render de la malla
     function renderMalla() {
       const estadoRamos = getEstadoRamos();
       const cont = document.getElementById("malla-curricular");
       cont.innerHTML = "";
       malla.forEach((anio, yIdx) => {
-        const col = document.createElement("div");
-        col.className = "year-column";
+        const block = document.createElement("section");
+        block.className = "year-block";
         // Título de año
         const yTitle = document.createElement("div");
         yTitle.className = "year-title";
         yTitle.innerHTML = `<i class="fa-solid ${anio.icon}"></i> ${anio.year}`;
-        col.appendChild(yTitle);
+        block.appendChild(yTitle);
 
-        // Fila de bimestres
+        // Fila de bimestres (horizontal)
         const bRow = document.createElement("div");
         bRow.className = "bimestres-row";
         anio.bimestres.forEach((bim, bIdx) => {
@@ -413,17 +406,15 @@
 
             const li = document.createElement("li");
             li.className = "subject" + (checked ? " checked" : "");
-            // Checkbox
-            const checkbox = document.createElement("input");
-            checkbox.type = "checkbox";
-            checkbox.checked = checked;
-            checkbox.tabIndex = 0;
-            checkbox.id = "ramo-" + ramoId;
+            li.tabIndex = 0;
 
-            // Evento de guardado
-            checkbox.addEventListener("change", (e) => {
+            // Ícono y nombre
+            li.innerHTML = `<i class="fa-solid ${ramo.icon} icon"></i> ${ramo.nombre} <span class="checkmark"><i class="fa-solid fa-check-circle"></i></span>`;
+
+            // Click para marcar/desmarcar
+            li.addEventListener("click", () => {
               const nuevoEstado = getEstadoRamos();
-              if (e.target.checked) {
+              if (!li.classList.contains("checked")) {
                 nuevoEstado[ramoId] = true;
                 li.classList.add("checked");
               } else {
@@ -433,22 +424,14 @@
               setEstadoRamos(nuevoEstado);
             });
 
-            // Etiqueta e ícono
-            const label = document.createElement("label");
-            label.setAttribute("for", "ramo-" + ramoId);
-            label.style.cursor = "pointer";
-            label.innerHTML = `<i class="fa-solid ${ramo.icon} icon"></i> ${ramo.nombre}`;
-
-            li.appendChild(checkbox);
-            li.appendChild(label);
             rList.appendChild(li);
           });
 
           bCard.appendChild(rList);
           bRow.appendChild(bCard);
         });
-        col.appendChild(bRow);
-        cont.appendChild(col);
+        block.appendChild(bRow);
+        cont.appendChild(block);
       });
     }
 
