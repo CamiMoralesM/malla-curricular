@@ -16,6 +16,7 @@
       --shadow: rgba(167, 126, 179, 0.12);
       --text-main: #8D4F74;
       --text-light: #BA7B9A;
+      --checked: #f7a8b8cc;
     }
     body {
       margin: 0;
@@ -48,32 +49,30 @@
       font-weight: 500;
       color: #FFF0F7;
     }
-    .years-container {
-      max-width: 1100px;
-      margin: 44px auto;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 38px;
-      justify-content: center;
+
+    .main-content-scroll {
+      overflow-x: auto;
+      max-width: 100vw;
+      padding: 36px 0 0 0;
     }
-    .year-card {
+    .years-row {
+      display: flex;
+      gap: 45px;
+      min-width: 1200px;
+      justify-content: flex-start;
+      align-items: flex-start;
+      padding: 0 40px;
+    }
+    .year-column {
+      min-width: 400px;
       background: var(--card);
       border-radius: 28px;
       box-shadow: 0 4px 22px var(--shadow);
-      padding: 28px 38px;
-      min-width: 320px;
-      flex: 1 1 340px;
-      max-width: 410px;
+      padding: 24px;
       display: flex;
       flex-direction: column;
-      gap: 19px;
+      gap: 13px;
       border: 2px solid var(--primary);
-      position: relative;
-      transition: box-shadow .2s, transform .2s;
-    }
-    .year-card:hover {
-      box-shadow: 0 8px 32px #f7a8b84d;
-      transform: translateY(-3px) scale(1.018);
     }
     .year-title {
       font-size: 1.35rem;
@@ -84,65 +83,83 @@
       gap: 11px;
       font-weight: 600;
       letter-spacing: 1px;
+      justify-content: center;
     }
-    .year-title i {
-      color: var(--primary);
-      font-size: 1.15em;
+    .bimestres-row {
+      display: flex;
+      gap: 18px;
+      margin-bottom: 12px;
+      flex-wrap: nowrap;
+      overflow-x: auto;
     }
-    .semester-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
+    .bimestre-card {
+      background: var(--background);
+      border-radius: 18px;
+      box-shadow: 0 2px 9px var(--shadow);
+      padding: 14px 12px 14px 12px;
+      min-width: 230px;
+      border-left: 7px solid var(--primary);
+      border-right: 2px solid #fadce6;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      flex: 0 0 250px;
       display: flex;
       flex-direction: column;
-      gap: 17px;
+      align-items: flex-start;
     }
-    .semester-item {
-      background: var(--background);
-      padding: 16px;
-      border-radius: 16px;
-      box-shadow: 0 2px 9px var(--shadow);
-      font-size: 1.07rem;
-      border-left: 7px solid var(--primary);
-      transition: border-color 0.2s, box-shadow 0.2s;
-      border-right: 2px solid #fadce6;
-    }
-    .semester-item:hover {
-      border-left: 7px solid var(--secondary);
-      box-shadow: 0 6px 22px #fbcfe8a2;
-    }
-    .semester-title {
+    .bimestre-title {
       font-weight: bold;
-      margin-bottom: 8px;
+      margin-bottom: 7px;
       color: var(--secondary);
-      font-size: 1.14rem;
+      font-size: 1.08rem;
       letter-spacing: 0.3px;
+      text-align: left;
     }
     .subjects-list {
       display: flex;
-      flex-wrap: wrap;
-      gap: 9px 13px;
+      flex-direction: column;
+      gap: 10px;
       padding: 0;
       margin: 0;
       list-style: none;
+      width: 100%;
     }
     .subject {
       background: var(--card);
       border-radius: 9px;
-      padding: 5px 13px;
+      padding: 7px 11px 7px 8px;
       font-size: 1.01rem;
       color: var(--text-light);
       border: 1.5px solid #f7a8b8a1;
       display: flex;
       align-items: center;
-      gap: 7px;
+      gap: 8px;
       font-weight: 500;
       box-shadow: 0 1px 6px var(--shadow);
+      width: 100%;
+      transition: background 0.2s, color 0.2s, border 0.2s;
+      position: relative;
+      cursor: pointer;
+    }
+    .subject input[type="checkbox"] {
+      accent-color: var(--primary);
+      margin-right: 6px;
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .subject.checked {
+      background: var(--checked);
+      color: var(--secondary);
+      border: 1.5px solid var(--secondary);
+      text-decoration: line-through;
+      opacity: 0.75;
     }
     .icon {
       color: var(--secondary);
       opacity: 0.85;
     }
+    /* Diplomas */
     .diploma-section {
       background: var(--card);
       max-width: 800px;
@@ -210,20 +227,28 @@
       color: var(--primary);
     }
     @media (max-width: 900px) {
-      .years-container {
+      .main-content-scroll {
+        padding: 16px 0 0 0;
+      }
+      .years-row {
         flex-direction: column;
-        gap: 27px;
-        align-items: center;
-        margin: 30px 4vw;
-      }
-      .year-card {
-        max-width: 97vw;
         min-width: unset;
+        gap: 30px;
+        padding: 0 2vw;
       }
-      .diploma-section {
-        margin-left: 3vw;
-        margin-right: 3vw;
-        padding: 18px 7vw;
+      .year-column {
+        min-width: unset;
+        width: 98vw;
+      }
+      .bimestres-row {
+        flex-direction: row;
+        flex-wrap: nowrap;
+        gap: 12px;
+        overflow-x: auto;
+      }
+      .bimestre-card {
+        min-width: 195px;
+        padding: 10px 6px;
       }
     }
   </style>
@@ -234,92 +259,11 @@
     <p>Malla Curricular 100% Online</p>
   </header>
 
-  <main class="years-container">
-    <section class="year-card">
-      <div class="year-title"><i class="fa-solid fa-calendar-days icon"></i> Año 1</div>
-      <ul class="semester-list">
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 1</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-server"></i> Sistemas Operativos</li>
-            <li class="subject"><i class="fa-solid fa-code"></i> Fundamentos de Programación</li>
-            <li class="subject"><i class="fa-solid fa-calculator"></i> Nivelación de Matemática</li>
-          </ul>
-        </li>
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 2</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-database"></i> Modelamiento de Bases de Datos</li>
-            <li class="subject"><i class="fa-solid fa-cubes"></i> Paradigma Orientado a Objetos</li>
-            <li class="subject"><i class="fa-solid fa-pen-nib"></i> Comunicación y Redacción</li>
-          </ul>
-        </li>
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 3</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-search"></i> Consulta de Datos</li>
-            <li class="subject"><i class="fa-solid fa-code"></i> Programación I</li>
-            <li class="subject"><i class="fa-solid fa-language"></i> Inglés Básico I</li>
-          </ul>
-        </li>
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 4</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-globe"></i> Programación Web</li>
-            <li class="subject"><i class="fa-solid fa-network-wired"></i> Modelamiento y Programación No SQL</li>
-            <li class="subject"><i class="fa-solid fa-database"></i> Programación de Bases de Datos</li>
-          </ul>
-        </li>
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 5</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-mobile-alt"></i> Programación Híbrida</li>
-            <li class="subject"><i class="fa-solid fa-code"></i> Programación II</li>
-            <li class="subject"><i class="fa-solid fa-language"></i> Inglés Básico II</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-
-    <section class="year-card">
-      <div class="year-title"><i class="fa-solid fa-calendar-days icon"></i> Año 2</div>
-      <ul class="semester-list">
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 6</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-paint-brush"></i> Diseño UX</li>
-            <li class="subject"><i class="fa-solid fa-laptop-code"></i> Diseño Web</li>
-          </ul>
-        </li>
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 7</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-laptop-code"></i> Programación Frontend</li>
-            <li class="subject"><i class="fa-brands fa-docker"></i> Automatización de Contenedores (Docker y K8)</li>
-            <li class="subject"><i class="fa-solid fa-language"></i> Inglés Básico III</li>
-          </ul>
-        </li>
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 8</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-plug"></i> Programación Web Service</li>
-            <li class="subject"><i class="fa-solid fa-tablet-alt"></i> Programación Multiplataforma</li>
-            <li class="subject"><i class="fa-solid fa-superscript"></i> Álgebra</li>
-            <li class="subject"><i class="fa-solid fa-briefcase"></i> Práctica Profesional</li>
-          </ul>
-        </li>
-        <li class="semester-item">
-          <div class="semester-title">Bimestre 9</div>
-          <ul class="subjects-list">
-            <li class="subject"><i class="fa-solid fa-puzzle-piece"></i> Programación de Componentes</li>
-            <li class="subject"><i class="fa-solid fa-scale-balanced"></i> Ética Profesional</li>
-            <li class="subject"><i class="fa-solid fa-language"></i> Inglés Básico IV</li>
-            <li class="subject"><i class="fa-solid fa-briefcase"></i> Práctica Profesional</li>
-          </ul>
-        </li>
-      </ul>
-    </section>
-  </main>
+  <div class="main-content-scroll">
+    <div class="years-row" id="malla-curricular">
+      <!-- El JS genera aquí los años y bimestres -->
+    </div>
+  </div>
 
   <section class="diploma-section">
     <h2><i class="fa-solid fa-award"></i> Diplomados que obtendrás</h2>
@@ -331,5 +275,186 @@
       <li class="diploma-item"><i class="fa-solid fa-paint-brush icon"></i> Diseño Frontend</li>
     </ul>
   </section>
+  
+  <script>
+    // Estructura de la malla y sus íconos
+    const malla = [
+      {
+        year: "Año 1",
+        icon: "fa-calendar-days",
+        bimestres: [
+          {
+            nombre: "Bimestre 1",
+            ramos: [
+              { nombre: "Sistemas Operativos", icon: "fa-server" },
+              { nombre: "Fundamentos de Programación", icon: "fa-code" },
+              { nombre: "Nivelación de Matemática", icon: "fa-calculator" },
+            ]
+          },
+          {
+            nombre: "Bimestre 2",
+            ramos: [
+              { nombre: "Modelamiento de Bases de Datos", icon: "fa-database" },
+              { nombre: "Paradigma Orientado a Objetos", icon: "fa-cubes" },
+              { nombre: "Comunicación y Redacción", icon: "fa-pen-nib" },
+            ]
+          },
+          {
+            nombre: "Bimestre 3",
+            ramos: [
+              { nombre: "Consulta de Datos", icon: "fa-search" },
+              { nombre: "Programación I", icon: "fa-code" },
+              { nombre: "Inglés Básico I", icon: "fa-language" },
+            ]
+          },
+          {
+            nombre: "Bimestre 4",
+            ramos: [
+              { nombre: "Programación Web", icon: "fa-globe" },
+              { nombre: "Modelamiento y Programación No SQL", icon: "fa-network-wired" },
+              { nombre: "Programación de Bases de Datos", icon: "fa-database" },
+            ]
+          },
+          {
+            nombre: "Bimestre 5",
+            ramos: [
+              { nombre: "Programación Híbrida", icon: "fa-mobile-alt" },
+              { nombre: "Programación II", icon: "fa-code" },
+              { nombre: "Inglés Básico II", icon: "fa-language" },
+            ]
+          }
+        ]
+      },
+      {
+        year: "Año 2",
+        icon: "fa-calendar-days",
+        bimestres: [
+          {
+            nombre: "Bimestre 6",
+            ramos: [
+              { nombre: "Diseño UX", icon: "fa-paint-brush" },
+              { nombre: "Diseño Web", icon: "fa-laptop-code" },
+            ]
+          },
+          {
+            nombre: "Bimestre 7",
+            ramos: [
+              { nombre: "Programación Frontend", icon: "fa-laptop-code" },
+              { nombre: "Automatización de Contenedores (Docker y K8)", icon: "fa-brands fa-docker" },
+              { nombre: "Inglés Básico III", icon: "fa-language" },
+            ]
+          },
+          {
+            nombre: "Bimestre 8",
+            ramos: [
+              { nombre: "Programación Web Service", icon: "fa-plug" },
+              { nombre: "Programación Multiplataforma", icon: "fa-tablet-alt" },
+              { nombre: "Álgebra", icon: "fa-superscript" },
+              { nombre: "Práctica Profesional", icon: "fa-briefcase" },
+            ]
+          },
+          {
+            nombre: "Bimestre 9",
+            ramos: [
+              { nombre: "Programación de Componentes", icon: "fa-puzzle-piece" },
+              { nombre: "Ética Profesional", icon: "fa-scale-balanced" },
+              { nombre: "Inglés Básico IV", icon: "fa-language" },
+              { nombre: "Práctica Profesional", icon: "fa-briefcase" },
+            ]
+          }
+        ]
+      }
+    ];
+
+    // Utilidades para guardar y cargar estado de los checkboxes
+    const STORAGE_KEY = "malla-curricular-checks";
+    function getEstadoRamos() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch {
+        return {};
+      }
+    }
+    function setEstadoRamos(estado) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(estado));
+    }
+
+    // Renderizado de la malla
+    function renderMalla() {
+      const estadoRamos = getEstadoRamos();
+      const cont = document.getElementById("malla-curricular");
+      cont.innerHTML = "";
+      malla.forEach((anio, yIdx) => {
+        const col = document.createElement("div");
+        col.className = "year-column";
+        // Título de año
+        const yTitle = document.createElement("div");
+        yTitle.className = "year-title";
+        yTitle.innerHTML = `<i class="fa-solid ${anio.icon}"></i> ${anio.year}`;
+        col.appendChild(yTitle);
+
+        // Fila de bimestres
+        const bRow = document.createElement("div");
+        bRow.className = "bimestres-row";
+        anio.bimestres.forEach((bim, bIdx) => {
+          const bCard = document.createElement("div");
+          bCard.className = "bimestre-card";
+          // Título bimestre
+          const bTitle = document.createElement("div");
+          bTitle.className = "bimestre-title";
+          bTitle.textContent = bim.nombre;
+          bCard.appendChild(bTitle);
+
+          // Lista de ramos
+          const rList = document.createElement("ul");
+          rList.className = "subjects-list";
+          bim.ramos.forEach((ramo, rIdx) => {
+            const ramoId = `${yIdx}-${bIdx}-${rIdx}`;
+            const checked = !!estadoRamos[ramoId];
+
+            const li = document.createElement("li");
+            li.className = "subject" + (checked ? " checked" : "");
+            // Checkbox
+            const checkbox = document.createElement("input");
+            checkbox.type = "checkbox";
+            checkbox.checked = checked;
+            checkbox.tabIndex = 0;
+            checkbox.id = "ramo-" + ramoId;
+
+            // Evento de guardado
+            checkbox.addEventListener("change", (e) => {
+              const nuevoEstado = getEstadoRamos();
+              if (e.target.checked) {
+                nuevoEstado[ramoId] = true;
+                li.classList.add("checked");
+              } else {
+                delete nuevoEstado[ramoId];
+                li.classList.remove("checked");
+              }
+              setEstadoRamos(nuevoEstado);
+            });
+
+            // Etiqueta e ícono
+            const label = document.createElement("label");
+            label.setAttribute("for", "ramo-" + ramoId);
+            label.style.cursor = "pointer";
+            label.innerHTML = `<i class="fa-solid ${ramo.icon} icon"></i> ${ramo.nombre}`;
+
+            li.appendChild(checkbox);
+            li.appendChild(label);
+            rList.appendChild(li);
+          });
+
+          bCard.appendChild(rList);
+          bRow.appendChild(bCard);
+        });
+        col.appendChild(bRow);
+        cont.appendChild(col);
+      });
+    }
+
+    // Inicializar
+    document.addEventListener("DOMContentLoaded", renderMalla);
+  </script>
 </body>
 </html>
