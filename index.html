@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Malla Curricular - Analista Programador </title>
+  <title>Malla Curricular - Analista Programador (Iplacex)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -44,6 +44,17 @@
       border-left: 4px solid #3498db;
       border-radius: 5px;
       font-size: 14px;
+      cursor: pointer;
+      transition: background 0.3s, color 0.3s;
+    }
+    .ramo:hover {
+      background: #d6ebfa;
+    }
+    .ramo.seleccionado {
+      background: #d4edda;
+      color: #155724;
+      border-left-color: #28a745;
+      text-decoration: line-through;
     }
     ul {
       margin-top: 15px;
@@ -136,6 +147,37 @@
     <li>Diplomado en Diseño Frontend</li>
   </ul>
 
+  <footer>
+    Fuente: <a href="https://www.iplacex.cl/carreras/carreras-100-online/analista-programador/">Iplacex</a>
+  </footer>
+
+  <script>
+    // Al cargar, revisa localStorage
+    document.addEventListener("DOMContentLoaded", () => {
+      const ramos = document.querySelectorAll(".ramo");
+      const completados = JSON.parse(localStorage.getItem("ramosCompletados")) || [];
+
+      ramos.forEach(ramo => {
+        const texto = ramo.textContent;
+
+        // Si ya está completado, márcalo
+        if (completados.includes(texto)) {
+          ramo.classList.add("seleccionado");
+        }
+
+        // Evento de clic
+        ramo.addEventListener("click", () => {
+          ramo.classList.toggle("seleccionado");
+
+          const actualizado = document.querySelectorAll(".ramo.seleccionado");
+          const nuevosCompletados = Array.from(actualizado).map(r => r.textContent);
+
+          // Guardar en localStorage
+          localStorage.setItem("ramosCompletados", JSON.stringify(nuevosCompletados));
+        });
+      });
+    });
+  </script>
 </body>
 </html>
 
