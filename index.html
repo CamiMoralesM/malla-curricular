@@ -51,7 +51,7 @@
       color: #FFF0F7;
     }
     .main-content-col {
-      max-width: 1200px;
+      max-width: 1300px;
       margin: 45px auto 0 auto;
       display: flex;
       flex-direction: column;
@@ -83,24 +83,27 @@
       color: var(--primary);
       font-size: 1.15em;
     }
+
     .bimestres-row {
       display: flex;
-      gap: 22px;
+      gap: 24px;
       margin-bottom: 0;
-      flex-wrap: nowrap;
-      overflow-x: auto;
       width: 100%;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      overflow: visible; /* No scroll, todo visible */
     }
     .bimestre-card {
       background: var(--background);
       border-radius: 18px;
       box-shadow: 0 2px 9px var(--shadow);
       padding: 14px 12px 14px 12px;
-      min-width: 230px;
+      min-width: 220px;
+      max-width: 250px;
+      flex: 1 1 220px;
       border-left: 7px solid var(--primary);
       border-right: 2px solid #fadce6;
       transition: border-color 0.2s, box-shadow 0.2s;
-      flex: 0 0 250px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -231,20 +234,33 @@
     footer a:hover {
       color: var(--primary);
     }
+    @media (max-width: 1100px) {
+      .bimestres-row {
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: flex-start;
+      }
+      .bimestre-card {
+        flex: 1 1 250px;
+        min-width: 210px;
+        max-width: 98vw;
+      }
+    }
     @media (max-width: 900px) {
       .main-content-col {
         padding: 0 2vw;
       }
       .bimestres-row {
         gap: 12px;
-        overflow-x: auto;
+        flex-wrap: wrap;
       }
       .bimestre-card {
         min-width: 180px;
+        max-width: 99vw;
         padding: 10px 6px;
       }
       .year-block {
-        padding: 18px 6vw 22px 6vw;
+        padding: 18px 3vw 22px 3vw;
       }
     }
   </style>
@@ -268,6 +284,9 @@
       <li class="diploma-item"><i class="fa-solid fa-paint-brush icon"></i> Diseño Frontend</li>
     </ul>
   </section>
+  <footer>
+    Fuente oficial: <a href="https://www.iplacex.cl/carreras/carreras-100-online/analista-programador/" target="_blank">Iplacex</a>
+  </footer>
   <script>
     // Estructura de la malla y sus íconos
     const malla = [
@@ -439,4 +458,5 @@
     document.addEventListener("DOMContentLoaded", renderMalla);
   </script>
 </body>
+</html>
 </html>
