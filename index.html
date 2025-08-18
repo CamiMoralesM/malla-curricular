@@ -2,47 +2,129 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Malla Curricular</title>
+  <title>Malla Curricular - Analista Programador (Iplacex)</title>
   <style>
     body {
       font-family: Arial, sans-serif;
-      background: #f4f4f9;
+      background: #f4f6fa;
+      margin: 0;
       padding: 20px;
     }
     h1 {
       text-align: center;
+      color: #2c3e50;
+      margin-bottom: 30px;
     }
-    .semestre {
-      margin: 20px 0;
-      padding: 15px;
+    h2 {
+      color: #34495e;
+      border-left: 5px solid #3498db;
+      padding-left: 10px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .bimestre {
       background: white;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+      border-radius: 12px;
+      padding: 15px;
+      box-shadow: 0 3px 6px rgba(0,0,0,0.1);
     }
     .ramo {
-      margin: 5px 0;
+      margin: 6px 0;
       padding: 8px;
-      border-left: 4px solid #3498db;
       background: #ecf6fd;
+      border-left: 4px solid #3498db;
       border-radius: 5px;
+      font-size: 14px;
+    }
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 14px;
+      color: #777;
     }
   </style>
 </head>
 <body>
-  <h1>Malla Curricular</h1>
+  <h1>Malla Curricular – Analista Programador (Iplacex)</h1>
 
-  <div class="semestre">
-    <h2>Semestre 1</h2>
-    <div class="ramo">Matemáticas I</div>
-    <div class="ramo">Introducción a la Programación</div>
-    <div class="ramo">Comunicación Oral y Escrita</div>
+  <h2>Año 1</h2>
+  <div class="grid">
+    <div class="bimestre">
+      <h3>Bimestre 1</h3>
+      <div class="ramo">Sistemas Operativos</div>
+      <div class="ramo">Fundamentos de Programación</div>
+      <div class="ramo">Nivelación de Matemática</div>
+    </div>
+    <div class="bimestre">
+      <h3>Bimestre 2</h3>
+      <div class="ramo">Modelamiento de Bases de Datos</div>
+      <div class="ramo">Paradigma Orientado a Objetos</div>
+      <div class="ramo">Comunicación y Redacción</div>
+    </div>
+    <div class="bimestre">
+      <h3>Bimestre 3</h3>
+      <div class="ramo">Consulta de Datos</div>
+      <div class="ramo">Programación I</div>
+      <div class="ramo">Inglés Básico I</div>
+    </div>
+    <div class="bimestre">
+      <h3>Bimestre 4</h3>
+      <div class="ramo">Programación Web</div>
+      <div class="ramo">Modelamiento y Programación No SQL</div>
+      <div class="ramo">Programación de Bases de Datos</div>
+    </div>
+    <div class="bimestre">
+      <h3>Bimestre 5</h3>
+      <div class="ramo">Programación Híbrida</div>
+      <div class="ramo">Programación II</div>
+      <div class="ramo">Inglés Básico II</div>
+    </div>
   </div>
 
-  <div class="semestre">
-    <h2>Semestre 2</h2>
-    <div class="ramo">Matemáticas II</div>
-    <div class="ramo">Estructura de Datos</div>
-    <div class="ramo">Inglés Técnico</div>
+  <h2>Año 2</h2>
+  <div class="grid">
+    <div class="bimestre">
+      <h3>Bimestre 6</h3>
+      <div class="ramo">Diseño UX</div>
+      <div class="ramo">Diseño Web</div>
+    </div>
+    <div class="bimestre">
+      <h3>Bimestre 7</h3>
+      <div class="ramo">Programación Frontend</div>
+      <div class="ramo">Automatización de Contenedores (Docker y K8)</div>
+      <div class="ramo">Inglés Básico III</div>
+    </div>
+    <div class="bimestre">
+      <h3>Bimestre 8</h3>
+      <div class="ramo">Programación Web Service</div>
+      <div class="ramo">Programación Multiplataforma</div>
+      <div class="ramo">Álgebra</div>
+      <div class="ramo">Práctica Profesional</div>
+    </div>
+    <div class="bimestre">
+      <h3>Bimestre 9</h3>
+      <div class="ramo">Programación de Componentes</div>
+      <div class="ramo">Ética Profesional</div>
+      <div class="ramo">Inglés Básico IV</div>
+      <div class="ramo">Práctica Profesional</div>
+    </div>
   </div>
+
+  <h2>🎓 Diplomados que obtendrás</h2>
+  <ul>
+    <li>Diplomado en Sistemas Operativos y Contenedores</li>
+    <li>Diplomado en Bases de Datos</li>
+    <li>Diplomado en Desarrollo de Aplicaciones</li>
+    <li>Diplomado en Desarrollo Avanzado de Aplicaciones</li>
+    <li>Diplomado en Diseño Frontend</li>
+  </ul>
+
+  <footer>
+    Fuente: <a href="https://www.iplacex.cl/carreras/carreras-100-online/analista-programador/">Iplacex</a>
+  </footer>
 </body>
 </html>
+
