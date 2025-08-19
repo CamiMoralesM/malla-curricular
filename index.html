@@ -417,7 +417,6 @@
     ];
 
     // Utilidad para guardar/cargar estado de los ramos realizados
-    const STORAGE_KEY = "malla-curricular-tick-v2";
     let usuarioActual = null;
     let estadoRamosCache = {};
 
@@ -448,21 +447,15 @@
       }
     }
 
-    // Estado: local o remoto según usuario
+    // Estado: solo remoto (Firestore) cuando logueado
     function getEstadoRamos() {
       if (usuarioActual && estadoRamosCache) return estadoRamosCache;
-      try {
-        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
-      } catch {
-        return {};
-      }
+      return {}; // Si no logueado, no hay datos
     }
     function setEstadoRamos(estado) {
       if (usuarioActual) {
         // Guardar en Firestore
         db.collection("ramos").doc(usuarioActual.uid).set({ estado });
-      } else {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(estado));
       }
     }
 
@@ -515,19 +508,30 @@
             // Ícono y nombre
             li.innerHTML = `<i class="fa-solid ${ramo.icon} icon"></i> ${ramo.nombre} <span class="checkmark"><i class="fa-solid fa-check-circle"></i></span>`;
 
-            // Click para marcar/desmarcar
-            li.addEventListener("click", () => {
-              let nuevoEstado = { ...getEstadoRamos() };
-              if (!li.classList.contains("checked")) {
-                nuevoEstado[ramoId] = true;
-                li.classList.add("checked");
-              } else {
-                delete nuevoEstado[ramoId];
-                li.classList.remove("checked");
-              }
-              setEstadoRamos(nuevoEstado);
-              if (!usuarioActual) renderMalla(); // Si es local, refresca. Si es remoto, el listener lo hará.
-            });
+            if (usuarioActual) {
+              // Click para marcar/desmarcar SOLO si está logueado
+              li.addEventListener("click", () => {
+                let nuevoEstado = { ...getEstadoRamos() };
+                if (!li.classList.contains("checked")) {
+                  nuevoEstado[ramoId] = true;
+                  li.classList.add("checked");
+                } else {
+                  delete nuevoEstado[ramoId];
+                  li.classList.remove("checked");
+                }
+                setEstadoRamos(nuevoEstado);
+              });
+              li.style.opacity = "";
+              li.style.cursor = "pointer";
+              li.title = "";
+              li.tabIndex = 0;
+            } else {
+              // Si NO hay usuario, se ve desactivado y NO permite click
+              li.style.opacity = "0.6";
+              li.style.cursor = "not-allowed";
+              li.title = "Inicia sesión para marcar tus ramos";
+              li.tabIndex = -1;
+            }
 
             rList.appendChild(li);
           });
