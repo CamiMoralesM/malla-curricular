@@ -287,28 +287,10 @@
       }
     }
   </style>
-  <!-- Firebase Modular SDKs -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-analytics.js";
-    // Puedes importar más SDKs aquí si los necesitas (auth, firestore, etc.)
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyA4NX0spRyWrqq83Ys3Mxur2OD7eotg3n0",
-      authDomain: "malla-curricular-39a2f.firebaseapp.com",
-      projectId: "malla-curricular-39a2f",
-      storageBucket: "malla-curricular-39a2f.appspot.com",
-      messagingSenderId: "928134183214",
-      appId: "1:928134183214:web:a7a72a792b1fc0f8e4e2bf",
-      measurementId: "G-M5W1494X2E"
-    };
-
-    // Inicializa Firebase
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
-    // Aquí puedes inicializar Firestore/Auth si lo necesitas (con getFirestore, getAuth, etc.)
-  </script>
-  <!-- NO uses los SDKs "compat" (los que tenías antes), ya que usas modular -->
+  <!-- Firebase SDKs para uso en GitHub Pages (compat) -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 </head>
 <body>
   <header>
@@ -334,6 +316,253 @@
   <footer>
     Hecho con ♥ | Sincronización multiplataforma con Firebase | <a href="https://firebase.google.com/" target="_blank">¿Qué es Firebase?</a>
   </footer>
-  <!-- Tu script principal puede seguir aquí, o migrarse también a módulos -->
+  <script>
+    // Configuración real de tu proyecto Firebase
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4NX0spRyWrqq83Ys3Mxur2OD7eotg3n0",
+      authDomain: "malla-curricular-39a2f.firebaseapp.com",
+      projectId: "malla-curricular-39a2f",
+      storageBucket: "malla-curricular-39a2f.appspot.com",
+      messagingSenderId: "928134183214",
+      appId: "1:928134183214:web:a7a72a792b1fc0f8e4e2bf",
+      measurementId: "G-M5W1494X2E"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
+
+    // Estructura de la malla y sus íconos
+    const malla = [
+      {
+        year: "Año 1",
+        icon: "fa-calendar-days",
+        bimestres: [
+          {
+            nombre: "Bimestre 1",
+            ramos: [
+              { nombre: "Sistemas Operativos", icon: "fa-server" },
+              { nombre: "Fundamentos de Programación", icon: "fa-code" },
+              { nombre: "Nivelación de Matemática", icon: "fa-calculator" },
+            ]
+          },
+          {
+            nombre: "Bimestre 2",
+            ramos: [
+              { nombre: "Modelamiento de Bases de Datos", icon: "fa-database" },
+              { nombre: "Paradigma Orientado a Objetos", icon: "fa-cubes" },
+              { nombre: "Comunicación y Redacción", icon: "fa-pen-nib" },
+            ]
+          },
+          {
+            nombre: "Bimestre 3",
+            ramos: [
+              { nombre: "Consulta de Datos", icon: "fa-search" },
+              { nombre: "Programación I", icon: "fa-code" },
+              { nombre: "Inglés Básico I", icon: "fa-language" },
+            ]
+          },
+          {
+            nombre: "Bimestre 4",
+            ramos: [
+              { nombre: "Programación Web", icon: "fa-globe" },
+              { nombre: "Modelamiento y Programación No SQL", icon: "fa-network-wired" },
+              { nombre: "Programación de Bases de Datos", icon: "fa-database" },
+            ]
+          },
+          {
+            nombre: "Bimestre 5",
+            ramos: [
+              { nombre: "Programación Híbrida", icon: "fa-mobile-alt" },
+              { nombre: "Programación II", icon: "fa-code" },
+              { nombre: "Inglés Básico II", icon: "fa-language" },
+            ]
+          }
+        ]
+      },
+      {
+        year: "Año 2",
+        icon: "fa-calendar-days",
+        bimestres: [
+          {
+            nombre: "Bimestre 6",
+            ramos: [
+              { nombre: "Diseño UX", icon: "fa-paint-brush" },
+              { nombre: "Diseño Web", icon: "fa-laptop-code" },
+            ]
+          },
+          {
+            nombre: "Bimestre 7",
+            ramos: [
+              { nombre: "Programación Frontend", icon: "fa-laptop-code" },
+              { nombre: "Automatización de Contenedores (Docker y K8)", icon: "fa-brands fa-docker" },
+              { nombre: "Inglés Básico III", icon: "fa-language" },
+            ]
+          },
+          {
+            nombre: "Bimestre 8",
+            ramos: [
+              { nombre: "Programación Web Service", icon: "fa-plug" },
+              { nombre: "Programación Multiplataforma", icon: "fa-tablet-alt" },
+              { nombre: "Álgebra", icon: "fa-superscript" },
+              { nombre: "Práctica Profesional", icon: "fa-briefcase" },
+            ]
+          },
+          {
+            nombre: "Bimestre 9",
+            ramos: [
+              { nombre: "Programación de Componentes", icon: "fa-puzzle-piece" },
+              { nombre: "Ética Profesional", icon: "fa-scale-balanced" },
+              { nombre: "Inglés Básico IV", icon: "fa-language" },
+              { nombre: "Práctica Profesional", icon: "fa-briefcase" },
+            ]
+          }
+        ]
+      }
+    ];
+
+    // Utilidad para guardar/cargar estado de los ramos realizados
+    const STORAGE_KEY = "malla-curricular-tick-v2";
+    let usuarioActual = null;
+    let estadoRamosCache = {};
+
+    // Login UI
+    function renderLoginBar(user) {
+      const bar = document.getElementById("login-bar");
+      bar.innerHTML = "";
+      if (user) {
+        const userInfo = document.createElement("span");
+        userInfo.className = "user-info";
+        userInfo.innerHTML = `<img src="${user.photoURL}" title="${user.displayName}" /> ${user.displayName}`;
+        const logoutBtn = document.createElement("button");
+        logoutBtn.className = "login-btn";
+        logoutBtn.textContent = "Cerrar sesión";
+        logoutBtn.onclick = () => auth.signOut();
+        bar.appendChild(userInfo);
+        bar.appendChild(logoutBtn);
+      } else {
+        const loginBtn = document.createElement("button");
+        loginBtn.className = "login-btn";
+        loginBtn.id = "login-btn";
+        loginBtn.innerHTML = `<i class="fa-brands fa-google"></i> Iniciar sesión con Google`;
+        loginBtn.onclick = () => {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          auth.signInWithPopup(provider);
+        };
+        bar.appendChild(loginBtn);
+      }
+    }
+
+    // Estado: local o remoto según usuario
+    function getEstadoRamos() {
+      if (usuarioActual && estadoRamosCache) return estadoRamosCache;
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY)) || {};
+      } catch {
+        return {};
+      }
+    }
+    function setEstadoRamos(estado) {
+      if (usuarioActual) {
+        // Guardar en Firestore
+        db.collection("ramos").doc(usuarioActual.uid).set({ estado });
+      } else {
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(estado));
+      }
+    }
+
+    // Sincronización en tiempo real con Firestore (si está logueado)
+    function listenEstadoRamos(uid) {
+      return db.collection("ramos").doc(uid)
+        .onSnapshot((doc) => {
+          estadoRamosCache = (doc.exists && doc.data().estado) ? doc.data().estado : {};
+          renderMalla();
+        });
+    }
+
+    // Render de la malla
+    function renderMalla() {
+      const estadoRamos = getEstadoRamos();
+      const cont = document.getElementById("malla-curricular");
+      cont.innerHTML = "";
+      malla.forEach((anio, yIdx) => {
+        const block = document.createElement("section");
+        block.className = "year-block";
+        // Título de año
+        const yTitle = document.createElement("div");
+        yTitle.className = "year-title";
+        yTitle.innerHTML = `<i class="fa-solid ${anio.icon}"></i> ${anio.year}`;
+        block.appendChild(yTitle);
+
+        // Fila de bimestres (en grid para usar todo el ancho)
+        const bRow = document.createElement("div");
+        bRow.className = "bimestres-row";
+        anio.bimestres.forEach((bim, bIdx) => {
+          const bCard = document.createElement("div");
+          bCard.className = "bimestre-card";
+          // Título bimestre
+          const bTitle = document.createElement("div");
+          bTitle.className = "bimestre-title";
+          bTitle.textContent = bim.nombre;
+          bCard.appendChild(bTitle);
+
+          // Lista de ramos
+          const rList = document.createElement("ul");
+          rList.className = "subjects-list";
+          bim.ramos.forEach((ramo, rIdx) => {
+            const ramoId = `${yIdx}-${bIdx}-${rIdx}`;
+            const checked = !!estadoRamos[ramoId];
+
+            const li = document.createElement("li");
+            li.className = "subject" + (checked ? " checked" : "");
+            li.tabIndex = 0;
+
+            // Ícono y nombre
+            li.innerHTML = `<i class="fa-solid ${ramo.icon} icon"></i> ${ramo.nombre} <span class="checkmark"><i class="fa-solid fa-check-circle"></i></span>`;
+
+            // Click para marcar/desmarcar
+            li.addEventListener("click", () => {
+              let nuevoEstado = { ...getEstadoRamos() };
+              if (!li.classList.contains("checked")) {
+                nuevoEstado[ramoId] = true;
+                li.classList.add("checked");
+              } else {
+                delete nuevoEstado[ramoId];
+                li.classList.remove("checked");
+              }
+              setEstadoRamos(nuevoEstado);
+              if (!usuarioActual) renderMalla(); // Si es local, refresca. Si es remoto, el listener lo hará.
+            });
+
+            rList.appendChild(li);
+          });
+
+          bCard.appendChild(rList);
+          bRow.appendChild(bCard);
+        });
+        block.appendChild(bRow);
+        cont.appendChild(block);
+      });
+    }
+
+    // Inicialización y listeners de auth
+    let unsubscribeRamos = null;
+    auth.onAuthStateChanged(user => {
+      usuarioActual = user;
+      renderLoginBar(user);
+      if (unsubscribeRamos) unsubscribeRamos();
+      if (user) {
+        unsubscribeRamos = listenEstadoRamos(user.uid);
+      } else {
+        estadoRamosCache = {};
+        renderMalla();
+      }
+    });
+
+    // Inicializar (para no logueados)
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!usuarioActual) renderMalla();
+    });
+  </script>
 </body>
 </html>
