@@ -18,6 +18,11 @@
       --text-light: #BA7B9A;
       --checked: #f7a8b8cc;
       --checked-border: #A77EB3;
+      --supervisado-bg: #e8f7fc;
+      --supervisado-border: #80c4e0;
+      --supervisado-text: #5393a2;
+      --supervisado-checked-bg: #b5e3f3;
+      --supervisado-checked-text: #397788;
     }
     html, body {
       margin: 0;
@@ -200,6 +205,16 @@
     .subject.checked .checkmark {
       display: inline;
     }
+    .subject-supervisado {
+      background: var(--supervisado-bg) !important;
+      border-color: var(--supervisado-border) !important;
+      color: var(--supervisado-text) !important;
+    }
+    .subject-supervisado.checked {
+      background: var(--supervisado-checked-bg) !important;
+      color: var(--supervisado-checked-text) !important;
+      opacity: 0.78;
+    }
     .icon {
       color: var(--secondary);
       opacity: 0.85;
@@ -344,8 +359,8 @@
           {
             nombre: "Bimestre 2",
             ramos: [
-              { nombre: "Modelamiento de Bases de Datos", icon: "fa-database" },
-              { nombre: "Paradigma Orientado a Objetos", icon: "fa-cubes" },
+              { nombre: "Modelamiento de Bases de Datos", icon: "fa-database", supervisado: true },
+              { nombre: "Paradigma Orientado a Objetos", icon: "fa-cubes", supervisado: true },
               { nombre: "Comunicación y Redacción", icon: "fa-pen-nib" },
             ]
           },
@@ -382,7 +397,7 @@
           {
             nombre: "Bimestre 6",
             ramos: [
-              { nombre: "Diseño UX", icon: "fa-paint-brush" },
+              { nombre: "Diseño UX", icon: "fa-paint-brush", supervisado: true },
               { nombre: "Diseño Web", icon: "fa-laptop-code" },
             ]
           },
@@ -398,7 +413,7 @@
             nombre: "Bimestre 8",
             ramos: [
               { nombre: "Programación Web Service", icon: "fa-plug" },
-              { nombre: "Programación Multiplataforma", icon: "fa-tablet-alt" },
+              { nombre: "Programación Multiplataforma", icon: "fa-tablet-alt", supervisado: true },
               { nombre: "Álgebra", icon: "fa-superscript" },
               { nombre: "Práctica Profesional", icon: "fa-briefcase" },
             ]
@@ -502,7 +517,10 @@
             const checked = !!estadoRamos[ramoId];
 
             const li = document.createElement("li");
-            li.className = "subject" + (checked ? " checked" : "");
+            let liClass = "subject";
+            if (checked) liClass += " checked";
+            if (ramo.supervisado) liClass += " subject-supervisado";
+            li.className = liClass;
             li.tabIndex = 0;
 
             // Ícono y nombre
