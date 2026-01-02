@@ -4,299 +4,904 @@
   <meta charset="UTF-8">
   <title>Malla Curricular - Analista Programador</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
   <link href="https://fonts.googleapis.com/css?family=Montserrat:700,400&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
   <style>
     :root {
       --primary: #F7A8B8;
       --secondary: #A77EB3;
+      --accent: #FBCFE8;
       --background: #FFF0F6;
       --card: #FFF6FA;
-      --shadow: rgba(167,126,179,.12);
+      --shadow: rgba(167, 126, 179, 0.12);
       --text-main: #8D4F74;
+      --text-light: #BA7B9A;
       --checked: #f7a8b8cc;
+      --checked-border: #A77EB3;
+      --supervisado-bg: #e8f7fc;
+      --supervisado-border: #80c4e0;
+      --supervisado-text: #5393a2;
+      --supervisado-checked-bg: #b5e3f3;
+      --supervisado-checked-text: #397788;
+      --notes-bg: #fff9e6;
+      --notes-border: #f4c430;
+      --notes-text: #8b7c00;
     }
-
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      width: 100vw;
+      min-height: 100vh;
       background: var(--background);
-      font-family: 'Montserrat', sans-serif;
+      font-family: 'Montserrat', Arial, sans-serif;
       color: var(--text-main);
+      box-sizing: border-box;
+      overflow-x: hidden;
     }
-
     header {
-      background: linear-gradient(120deg,#F7A8B8 60%,#A77EB3);
-      color: white;
-      padding: 30px;
+      background: linear-gradient(120deg, #F7A8B8 60%, #A77EB3 100%);
+      color: #fff;
+      padding: 38px 0 26px 0;
       text-align: center;
       border-bottom-left-radius: 40px;
       border-bottom-right-radius: 40px;
+      box-shadow: 0 4px 24px var(--shadow);
+      position: relative;
     }
-
+    header h1 {
+      margin: 0;
+      font-size: 2.7rem;
+      letter-spacing: 2px;
+      font-weight: 700;
+      text-shadow: 0 2px 22px #ffd6e3;
+    }
     .login-bar {
       display: flex;
+      align-items: center;
       justify-content: flex-end;
-      gap: 10px;
-      padding: 10px 20px 0 0;
+      gap: 16px;
+      padding: 7px 24px 0 0;
+      font-size: 1.06rem;
     }
-
     .login-btn {
       background: var(--secondary);
+      color: #fff;
       border: none;
-      color: white;
-      padding: 7px 16px;
-      border-radius: 8px;
+      border-radius: 7px;
+      padding: 7px 18px;
+      font-size: 1.03rem;
       cursor: pointer;
       font-weight: 600;
+      box-shadow: 0 2px 8px var(--shadow);
+      transition: background 0.2s;
     }
-
+    .login-btn:hover {
+      background: var(--primary);
+      color: var(--secondary);
+    }
     .user-info {
       display: flex;
       align-items: center;
-      gap: 8px;
-      font-weight: 600;
+      gap: 9px;
+      font-weight: 500;
+      color: var(--secondary);
     }
-
     .user-info img {
-      width: 32px;
-      height: 32px;
+      width: 31px;
+      height: 31px;
       border-radius: 50%;
+      border: 1.5px solid var(--primary);
     }
-
     .main-content-col {
-      padding: 40px 0;
+      width: 100vw;
+      max-width: 100vw;
+      margin: 45px 0 0 0;
       display: flex;
       flex-direction: column;
       gap: 60px;
+      padding: 0;
+      box-sizing: border-box;
     }
-
+    .year-block {
+      background: none;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 0 0 38px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      border: none;
+      align-items: stretch;
+      width: 100vw;
+      max-width: 100vw;
+    }
     .year-title {
-      font-size: 1.4rem;
-      padding-left: 5vw;
-      font-weight: 700;
+      font-size: 1.5rem;
       color: var(--secondary);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      justify-content: flex-start;
+      padding-left: 3vw;
     }
-
+    .year-title i {
+      color: var(--primary);
+      font-size: 1.15em;
+    }
     .bimestres-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit,minmax(230px,1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 32px;
       width: 95vw;
-      margin: auto;
+      margin: 0 auto;
+      justify-items: stretch;
+      align-items: stretch;
     }
-
     .bimestre-card {
       background: var(--card);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 2px 10px var(--shadow);
-      border-left: 6px solid var(--primary);
+      border-radius: 18px;
+      box-shadow: 0 2px 12px var(--shadow);
+      padding: 20px 16px 16px 16px;
+      border-left: 7px solid var(--primary);
+      border-right: 2px solid #fadce6;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      min-width: 0;
     }
-
     .bimestre-title {
       font-weight: bold;
       margin-bottom: 12px;
       color: var(--secondary);
+      font-size: 1.14rem;
+      letter-spacing: 0.3px;
+      text-align: left;
     }
-
     .subjects-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
       display: flex;
       flex-direction: column;
-      gap: 10px;
+      gap: 12px;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+      width: 100%;
     }
-
     .subject {
-      background: white;
-      border-radius: 8px;
-      padding: 8px 12px;
+      background: var(--background);
+      border-radius: 9px;
+      padding: 9px 13px 9px 10px;
+      font-size: 1.07rem;
+      color: var(--text-light);
       border: 1.5px solid #f7a8b8a1;
       display: flex;
       align-items: center;
-      gap: 8px;
+      gap: 10px;
+      font-weight: 500;
+      box-shadow: 0 1px 6px var(--shadow);
+      width: 100%;
+      transition: background 0.2s, color 0.2s, border 0.2s;
       cursor: pointer;
+      position: relative;
+      user-select: none;
     }
-
     .subject.checked {
       background: var(--checked);
+      color: var(--secondary);
+      border: 1.5px solid var(--checked-border);
       text-decoration: line-through;
-      opacity: .8;
+      opacity: 0.78;
+      box-shadow: 0 2px 12px #f7a8b837;
+    }
+    .subject .checkmark {
+      position: absolute;
+      right: 18px;
+      font-size: 1.13em;
+      color: var(--secondary);
+      opacity: 0.84;
+      pointer-events: none;
+      display: none;
+    }
+    .subject.checked .checkmark {
+      display: inline;
+    }
+    .subject-supervisado {
+      background: var(--supervisado-bg) !important;
+      border-color: var(--supervisado-border) !important;
+      color: var(--supervisado-text) !important;
+    }
+    .subject-supervisado.checked {
+      background: var(--supervisado-checked-bg) !important;
+      color: var(--supervisado-checked-text) !important;
+      opacity: 0.78;
+    }
+    .subject.has-notes {
+      border-left: 4px solid var(--notes-border);
+    }
+    .subject.has-notes::before {
+      content: '📝';
+      position: absolute;
+      right: 45px;
+      font-size: 0.9em;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+    .subject-actions {
+      position: absolute;
+      right: 8px;
+      display: flex;
+      gap: 5px;
+      align-items: center;
+    }
+    .notes-btn {
+      background: none;
+      border: none;
+      color: var(--secondary);
+      font-size: 0.9em;
+      cursor: pointer;
+      padding: 4px;
+      border-radius: 4px;
+      opacity: 0.7;
+      transition: all 0.2s;
+    }
+    .notes-btn:hover {
+      opacity: 1;
+      background: var(--primary);
+      color: white;
+    }
+    .icon {
+      color: var(--secondary);
+      opacity: 0.85;
+    }
+    
+    /* Modal para notas */
+    .notes-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(139, 79, 116, 0.15);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .notes-modal.show {
+      display: flex;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .notes-modal-content {
+      background: var(--card);
+      border-radius: 20px;
+      box-shadow: 0 8px 32px var(--shadow);
+      padding: 32px;
+      max-width: 500px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+      border: 2px solid var(--primary);
+      position: relative;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { transform: translateY(-20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+    .notes-modal-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 24px;
+      color: var(--secondary);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+    .notes-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 8px;
+      border-radius: 50%;
+      transition: all 0.2s;
+    }
+    .notes-close:hover {
+      background: var(--primary);
+      color: white;
+    }
+    .notes-textarea {
+      width: 100%;
+      min-height: 150px;
+      border: 2px solid #f7a8b8a1;
+      border-radius: 12px;
+      padding: 16px;
+      font-family: 'Montserrat', Arial, sans-serif;
+      font-size: 1rem;
+      color: var(--text-main);
+      background: var(--background);
+      resize: vertical;
+      box-sizing: border-box;
+      transition: border-color 0.2s;
+    }
+    .notes-textarea:focus {
+      outline: none;
+      border-color: var(--secondary);
+    }
+    .notes-textarea::placeholder {
+      color: var(--text-light);
+      opacity: 0.7;
+    }
+    .notes-actions {
+      display: flex;
+      gap: 12px;
+      justify-content: flex-end;
+      margin-top: 20px;
+    }
+    .notes-save-btn, .notes-cancel-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Montserrat', Arial, sans-serif;
+    }
+    .notes-save-btn {
+      background: var(--secondary);
+      color: white;
+      box-shadow: 0 2px 8px var(--shadow);
+    }
+    .notes-save-btn:hover {
+      background: var(--primary);
+      color: var(--secondary);
+    }
+    .notes-cancel-btn {
+      background: transparent;
+      color: var(--text-light);
+      border: 1px solid #f7a8b8a1;
+    }
+    .notes-cancel-btn:hover {
+      background: var(--background);
+    }
+    .notes-delete-btn {
+      background: #ff7b7b;
+      color: white;
+      margin-right: auto;
+    }
+    .notes-delete-btn:hover {
+      background: #ff5555;
     }
 
-    .subject input {
-      margin-left: auto;
-      width: 55px;
-    }
-
-    footer {
+    .diploma-section {
+      background: var(--card);
+      max-width: 900px;
+      margin: 48px auto 0 auto;
+      border-radius: 25px;
+      box-shadow: 0 4px 22px var(--shadow);
+      padding: 32px 36px 30px 36px;
       text-align: center;
-      margin: 40px 0;
+      border: 2px solid var(--primary);
+      position: relative;
+    }
+    .diploma-section h2 {
+      color: var(--primary);
+      margin-bottom: 22px;
+      font-size: 1.34rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      justify-content: center;
+    }
+    .diploma-section h2 i {
+      color: var(--secondary);
+    }
+    .diploma-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 21px 31px;
+      justify-content: center;
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
+    .diploma-item {
+      background: #fbe7ef;
+      padding: 13px 21px;
+      border-radius: 13px;
+      font-size: 1.09rem;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      box-shadow: 0 2px 12px #f7a8b837;
+      font-weight: 500;
+      color: var(--text-main);
+      border: 1.5px solid #f7a8b8a1;
+    }
+    .diploma-item i {
+      color: var(--secondary);
+    }
+    footer {
+      margin: 58px 0 0 0;
+      text-align: center;
+      font-size: 1.07rem;
       color: #c084a7;
+      padding-bottom: 30px;
+    }
+    footer a {
+      color: var(--secondary);
+      text-decoration: underline;
+      transition: color 0.2s;
+      font-weight: 600;
+    }
+    footer a:hover {
+      color: var(--primary);
+    }
+    @media (max-width: 900px) {
+      .main-content-col {
+        gap: 36px;
+      }
+      .bimestres-row {
+        gap: 16px;
+        grid-template-columns: 1fr;
+        width: 98vw;
+      }
+      .bimestre-card {
+        padding: 12px 7vw 12px 7vw;
+      }
+      .year-title {
+        padding-left: 5vw;
+      }
+      .notes-modal-content {
+        margin: 20px;
+        padding: 24px;
+      }
     }
   </style>
-
-  <!-- Firebase -->
+  <!-- Firebase SDKs para uso en GitHub Pages (compat) -->
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 </head>
-
 <body>
+  <header>
+    <h1><i class="fa-solid fa-graduation-cap"></i> Analista Programador</h1>
+    <div class="login-bar" id="login-bar"></div>
+  </header>
+  <div class="main-content-col" id="malla-curricular"></div>
 
-<header>
-  <h1><i class="fa-solid fa-graduation-cap"></i> Analista Programador</h1>
-  <div class="login-bar" id="login-bar"></div>
-</header>
+  <!-- Modal para notas -->
+  <div class="notes-modal" id="notes-modal">
+    <div class="notes-modal-content">
+      <button class="notes-close" onclick="closeNotesModal()">
+        <i class="fa-solid fa-times"></i>
+      </button>
+      <div class="notes-modal-header">
+        <i class="fa-solid fa-note-sticky"></i>
+        <span id="notes-subject-name">Notas del Ramo</span>
+      </div>
+      <textarea 
+        id="notes-textarea" 
+        class="notes-textarea" 
+        placeholder="Escribe tus notas, comentarios o calificación para este ramo..."
+      ></textarea>
+      <div class="notes-actions">
+        <button class="notes-delete-btn notes-save-btn" id="notes-delete-btn" onclick="deleteNotes()" style="display: none;">
+          <i class="fa-solid fa-trash"></i> Eliminar
+        </button>
+        <button class="notes-cancel-btn" onclick="closeNotesModal()">Cancelar</button>
+        <button class="notes-save-btn" onclick="saveNotes()">
+          <i class="fa-solid fa-save"></i> Guardar
+        </button>
+      </div>
+    </div>
+  </div>
 
-<div class="main-content-col" id="malla-curricular"></div>
+  <section class="diploma-section">
+    <h2><i class="fa-solid fa-award"></i> Diplomados que obtendrás</h2>
+    <ul class="diploma-list">
+      <li class="diploma-item"><i class="fa-solid fa-server icon"></i> Sistemas Operativos y Contenedores</li>
+      <li class="diploma-item"><i class="fa-solid fa-database icon"></i> Bases de Datos</li>
+      <li class="diploma-item"><i class="fa-solid fa-laptop-code icon"></i> Desarrollo de Aplicaciones</li>
+      <li class="diploma-item"><i class="fa-solid fa-layer-group icon"></i> Desarrollo Avanzado de Aplicaciones</li>
+      <li class="diploma-item"><i class="fa-solid fa-paint-brush icon"></i> Diseño Frontend</li>
+    </ul>
+  </section>
+  <footer>
+    Hecho con ♥ | Sincronización multiplataforma con Firebase | <a href="https://firebase.google.com/" target="_blank">¿Qué es Firebase?</a>
+  </footer>
+  <script>
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyA4NX0spRyWrqq83Ys3Mxur2OD7eotg3n0",
+      authDomain: "malla-curricular-39a2f.firebaseapp.com",
+      projectId: "malla-curricular-39a2f",
+      storageBucket: "malla-curricular-39a2f.appspot.com",
+      messagingSenderId: "928134183214",
+      appId: "1:928134183214:web:a7a72a792b1fc0f8e4e2bf",
+      measurementId: "G-M5W1494X2E"
+    };
 
-<footer>Hecho con ♥ | Firebase</footer>
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+    const auth = firebase.auth();
 
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyA4NX0spRyWrqq83Ys3Mxur2OD7eotg3n0",
-    authDomain: "malla-curricular-39a2f.firebaseapp.com",
-    projectId: "malla-curricular-39a2f",
-    storageBucket: "malla-curricular-39a2f.appspot.com",
-    messagingSenderId: "928134183214",
-    appId: "1:928134183214:web:a7a72a792b1fc0f8e4e2bf"
-  };
+    // Estructura de la malla y sus íconos
+    const malla = [
+      {
+        year: "Año 1",
+        icon: "fa-calendar-days",
+        bimestres: [
+          {
+            nombre: "Bimestre 1",
+            ramos: [
+              { nombre: "Sistemas Operativos", icon: "fa-server" },
+              { nombre: "Fundamentos de Programación", icon: "fa-code" },
+              { nombre: "Nivelación de Matemática", icon: "fa-calculator" },
+            ]
+          },
+          {
+            nombre: "Bimestre 2",
+            ramos: [
+              { nombre: "Modelamiento de Bases de Datos", icon: "fa-database", supervisado: true },
+              { nombre: "Paradigma Orientado a Objetos", icon: "fa-cubes", supervisado: true },
+              { nombre: "Comunicación y Redacción", icon: "fa-pen-nib" },
+            ]
+          },
+          {
+            nombre: "Bimestre 3",
+            ramos: [
+              { nombre: "Consulta de Datos", icon: "fa-search" },
+              { nombre: "Programación I", icon: "fa-code" },
+              { nombre: "Inglés Básico I", icon: "fa-language" },
+            ]
+          },
+          {
+            nombre: "Bimestre 4",
+            ramos: [
+              { nombre: "Programación Web", icon: "fa-globe" },
+              { nombre: "Modelamiento y Programación No SQL", icon: "fa-network-wired" },
+              { nombre: "Programación de Bases de Datos", icon: "fa-database" },
+            ]
+          },
+          {
+            nombre: "Bimestre 5",
+            ramos: [
+              { nombre: "Programación Híbrida", icon: "fa-mobile-alt" },
+              { nombre: "Programación II", icon: "fa-code" },
+              { nombre: "Inglés Básico II", icon: "fa-language" },
+            ]
+          }
+        ]
+      },
+      {
+        year: "Año 2",
+        icon: "fa-calendar-days",
+        bimestres: [
+          {
+            nombre: "Bimestre 6",
+            ramos: [
+              { nombre: "Diseño UX", icon: "fa-paint-brush", supervisado: true },
+              { nombre: "Diseño Web", icon: "fa-laptop-code" },
+            ]
+          },
+          {
+            nombre: "Bimestre 7",
+            ramos: [
+              { nombre: "Programación Frontend", icon: "fa-laptop-code" },
+              { nombre: "Automatización de Contenedores (Docker y K8)", icon: "fa-brands fa-docker" },
+              { nombre: "Inglés Básico III", icon: "fa-language" },
+            ]
+          },
+          {
+            nombre: "Bimestre 8",
+            ramos: [
+              { nombre: "Programación Web Service", icon: "fa-plug" },
+              { nombre: "Programación Multiplataforma", icon: "fa-tablet-alt", supervisado: true },
+              { nombre: "Álgebra", icon: "fa-superscript" },
+              { nombre: "Práctica Profesional", icon: "fa-briefcase" },
+            ]
+          },
+          {
+            nombre: "Bimestre 9",
+            ramos: [
+              { nombre: "Programación de Componentes", icon: "fa-puzzle-piece" },
+              { nombre: "Ética Profesional", icon: "fa-scale-balanced" },
+              { nombre: "Inglés Básico IV", icon: "fa-language" },
+              { nombre: "Práctica Profesional", icon: "fa-briefcase" },
+            ]
+          },
+          {
+            nombre: "Bimestre 10",
+            ramos:  [
+              { nombre: "Emprendimiento", icon: "fa-lightbulb" },
+              { nombre: "Proyecto de Titulación", icon: "fa-file-contract" },
+              { nombre: "Práctica Profesional", icon: "fa-briefcase" },
+            ]
+          }
+        ]
+      }
+    ];
 
-  firebase.initializeApp(firebaseConfig);
-  const auth = firebase.auth();
-  const db = firebase.firestore();
+    // Utilidad para guardar/cargar estado de los ramos realizados y notas
+    let usuarioActual = null;
+    let estadoRamosCache = {};
+    let notasRamosCache = {};
 
-  let usuarioActual = null;
-  let estadoRamosCache = {};
+    // Variables para el modal de notas
+    let currentRamoId = null;
 
-  const malla = [
-    {
-      year: "Año 1",
-      bimestres: [
-        { nombre: "Bimestre 1", ramos: ["Sistemas Operativos","Fundamentos de Programación","Nivelación de Matemática"] },
-        { nombre: "Bimestre 2", ramos: ["Modelamiento BD","POO","Comunicación"] },
-        { nombre: "Bimestre 3", ramos: ["Consulta de Datos","Programación I","Inglés I"] },
-        { nombre: "Bimestre 4", ramos: ["Programación Web","NoSQL","Prog. BD"] },
-        { nombre: "Bimestre 5", ramos: ["Programación Híbrida","Programación II","Inglés II"] }
-      ]
-    },
-    {
-      year: "Año 2",
-      bimestres: [
-        { nombre: "Bimestre 6", ramos: ["Diseño UX","Diseño Web"] },
-        { nombre: "Bimestre 7", ramos: ["Frontend","Docker y K8","Inglés III"] },
-        { nombre: "Bimestre 8", ramos: ["Web Service","Multiplataforma","Álgebra","Práctica"] },
-        { nombre: "Bimestre 9", ramos: ["Componentes","Ética","Inglés IV","Práctica"] },
-        { nombre: "Bimestre 10", ramos: ["Emprendimiento","Proyecto Título","Práctica"] }
-      ]
+    // Login UI
+    function renderLoginBar(user) {
+      const bar = document.getElementById("login-bar");
+      bar.innerHTML = "";
+      if (user) {
+        const userInfo = document.createElement("span");
+        userInfo.className = "user-info";
+        userInfo.innerHTML = `<img src="${user.photoURL}" title="${user.displayName}" /> ${user.displayName}`;
+        const logoutBtn = document.createElement("button");
+        logoutBtn.className = "login-btn";
+        logoutBtn.textContent = "Cerrar sesión";
+        logoutBtn.onclick = () => auth.signOut();
+        bar.appendChild(userInfo);
+        bar.appendChild(logoutBtn);
+      } else {
+        const loginBtn = document.createElement("button");
+        loginBtn.className = "login-btn";
+        loginBtn.id = "login-btn";
+        loginBtn.innerHTML = `<i class="fa-brands fa-google"></i> Iniciar sesión con Google`;
+        loginBtn.onclick = () => {
+          const provider = new firebase.auth.GoogleAuthProvider();
+          auth.signInWithPopup(provider);
+        };
+        bar.appendChild(loginBtn);
+      }
     }
-  ];
 
-  function renderLoginBar(user) {
-    const bar = document.getElementById("login-bar");
-    bar.innerHTML = "";
-    if (user) {
-      bar.innerHTML = `
-        <span class="user-info">
-          <img src="${user.photoURL}">
-          ${user.displayName}
-        </span>
-        <button class="login-btn" onclick="auth.signOut()">Cerrar sesión</button>
-      `;
-    } else {
-      const btn = document.createElement("button");
-      btn.className = "login-btn";
-      btn.textContent = "Iniciar sesión";
-      btn.onclick = () => auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
-      bar.appendChild(btn);
+    // Estado: solo remoto (Firestore) cuando logueado
+    function getEstadoRamos() {
+      if (usuarioActual && estadoRamosCache) return estadoRamosCache;
+      return {}; // Si no logueado, no hay datos
     }
-  }
+    function setEstadoRamos(estado) {
+      if (usuarioActual) {
+        // Guardar en Firestore
+        db.collection("ramos").doc(usuarioActual.uid).set({ estado, notas: notasRamosCache });
+      }
+    }
 
-  function setEstadoRamos(estado) {
-    if (!usuarioActual) return;
-    db.collection("ramos").doc(usuarioActual.uid).set({ estado });
-  }
-
-  function renderMalla() {
-    const cont = document.getElementById("malla-curricular");
-    cont.innerHTML = "";
-
-    malla.forEach((anio, y) => {
-      const title = document.createElement("div");
-      title.className = "year-title";
-      title.textContent = anio.year;
-      cont.appendChild(title);
-
-      const row = document.createElement("div");
-      row.className = "bimestres-row";
-
-      anio.bimestres.forEach((bim, b) => {
-        const card = document.createElement("div");
-        card.className = "bimestre-card";
-        card.innerHTML = `<div class="bimestre-title">${bim.nombre}</div>`;
-
-        const ul = document.createElement("ul");
-        ul.className = "subjects-list";
-
-        bim.ramos.forEach((ramo, r) => {
-          const id = `${y}-${b}-${r}`;
-          const data = estadoRamosCache[id];
-          const checked = data?.aprobado;
-
-          const li = document.createElement("li");
-          li.className = "subject" + (checked ? " checked" : "");
-          li.innerHTML = `
-            ${ramo}
-            ${checked ? `<input type="number" min="1" max="7" step="0.1" value="${data.nota ?? ""}">` : ""}
-          `;
-
-          li.onclick = () => {
-            if (!usuarioActual) return;
-            const nuevo = { ...estadoRamosCache };
-            checked ? delete nuevo[id] : nuevo[id] = { aprobado: true, nota: "" };
-            setEstadoRamos(nuevo);
-          };
-
-          li.onchange = e => {
-            if (e.target.type === "number") {
-              const nuevo = { ...estadoRamosCache };
-              nuevo[id].nota = parseFloat(e.target.value);
-              setEstadoRamos(nuevo);
-            }
-          };
-
-          ul.appendChild(li);
+    function getNotasRamos() {
+      if (usuarioActual && notasRamosCache) return notasRamosCache;
+      return {}; // Si no logueado, no hay datos
+    }
+    function setNotasRamos(notas) {
+      notasRamosCache = notas;
+      if (usuarioActual) {
+        // Guardar en Firestore
+        db.collection("ramos").doc(usuarioActual.uid).set({ 
+          estado: estadoRamosCache, 
+          notas: notasRamosCache 
         });
-
-        card.appendChild(ul);
-        row.appendChild(card);
-      });
-
-      cont.appendChild(row);
-    });
-  }
-
-  auth.onAuthStateChanged(user => {
-    usuarioActual = user;
-    renderLoginBar(user);
-
-    if (user) {
-      db.collection("ramos").doc(user.uid).onSnapshot(doc => {
-        estadoRamosCache = doc.exists ? doc.data().estado : {};
-        renderMalla();
-      });
-    } else {
-      estadoRamosCache = {};
-      renderMalla();
+      }
     }
-  });
 
-  renderMalla();
-</script>
+    // Sincronización en tiempo real con Firestore (si está logueado)
+    function listenEstadoRamos(uid) {
+      return db.collection("ramos").doc(uid)
+        .onSnapshot((doc) => {
+          if (doc.exists && doc.data()) {
+            const data = doc.data();
+            estadoRamosCache = data.estado || {};
+            notasRamosCache = data.notas || {};
+          } else {
+            estadoRamosCache = {};
+            notasRamosCache = {};
+          }
+          renderMalla();
+        });
+    }
 
+    // Funciones para el modal de notas
+    function openNotesModal(ramoId, ramoNombre) {
+      if (!usuarioActual) return;
+      
+      currentRamoId = ramoId;
+      const modal = document.getElementById("notes-modal");
+      const subjectName = document.getElementById("notes-subject-name");
+      const textarea = document.getElementById("notes-textarea");
+      const deleteBtn = document.getElementById("notes-delete-btn");
+      
+      subjectName.textContent = `Notas - ${ramoNombre}`;
+      
+      const notas = getNotasRamos();
+      textarea.value = notas[ramoId] || "";
+      
+      // Mostrar botón de eliminar si hay notas
+      if (notas[ramoId] && notas[ramoId].trim() !== "") {
+        deleteBtn.style.display = "block";
+      } else {
+        deleteBtn.style.display = "none";
+      }
+      
+      modal.classList.add("show");
+      textarea.focus();
+    }
+
+    function closeNotesModal() {
+      const modal = document.getElementById("notes-modal");
+      modal.classList.remove("show");
+      currentRamoId = null;
+    }
+
+    function saveNotes() {
+      if (!currentRamoId || !usuarioActual) return;
+      
+      const textarea = document.getElementById("notes-textarea");
+      const nuevasNotas = { ...getNotasRamos() };
+      
+      if (textarea.value.trim() === "") {
+        delete nuevasNotas[currentRamoId];
+      } else {
+        nuevasNotas[currentRamoId] = textarea.value.trim();
+      }
+      
+      setNotasRamos(nuevasNotas);
+      closeNotesModal();
+    }
+
+    function deleteNotes() {
+      if (!currentRamoId || !usuarioActual) return;
+      
+      const nuevasNotas = { ...getNotasRamos() };
+      delete nuevasNotas[currentRamoId];
+      
+      setNotasRamos(nuevasNotas);
+      closeNotesModal();
+    }
+
+    // Cerrar modal al hacer clic fuera
+    document.getElementById("notes-modal").addEventListener("click", function(e) {
+      if (e.target === this) {
+        closeNotesModal();
+      }
+    });
+
+    // Cerrar modal con Escape
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Escape") {
+        closeNotesModal();
+      }
+    });
+
+    // Render de la malla
+    function renderMalla() {
+      const estadoRamos = getEstadoRamos();
+      const notasRamos = getNotasRamos();
+      const cont = document.getElementById("malla-curricular");
+      cont.innerHTML = "";
+      malla.forEach((anio, yIdx) => {
+        const block = document.createElement("section");
+        block.className = "year-block";
+        // Título de año
+        const yTitle = document.createElement("div");
+        yTitle.className = "year-title";
+        yTitle.innerHTML = `<i class="fa-solid ${anio.icon}"></i> ${anio.year}`;
+        block.appendChild(yTitle);
+
+        // Fila de bimestres (en grid para usar todo el ancho)
+        const bRow = document.createElement("div");
+        bRow.className = "bimestres-row";
+        anio.bimestres.forEach((bim, bIdx) => {
+          const bCard = document.createElement("div");
+          bCard.className = "bimestre-card";
+          // Título bimestre
+          const bTitle = document.createElement("div");
+          bTitle.className = "bimestre-title";
+          bTitle.textContent = bim.nombre;
+          bCard.appendChild(bTitle);
+
+          // Lista de ramos
+          const rList = document.createElement("ul");
+          rList.className = "subjects-list";
+          bim.ramos.forEach((ramo, rIdx) => {
+            const ramoId = `${yIdx}-${bIdx}-${rIdx}`;
+            const checked = !!estadoRamos[ramoId];
+            const hasNotes = !!(notasRamos[ramoId] && notasRamos[ramoId].trim() !== "");
+
+            const li = document.createElement("li");
+            let liClass = "subject";
+            if (checked) liClass += " checked";
+            if (ramo.supervisado) liClass += " subject-supervisado";
+            if (hasNotes) liClass += " has-notes";
+            li.className = liClass;
+            li.tabIndex = 0;
+
+            // Contenido del ramo
+            li.innerHTML = `
+              <i class="fa-solid ${ramo.icon} icon"></i> 
+              <span class="subject-name">${ramo.nombre}</span>
+              <div class="subject-actions">
+                ${usuarioActual ? `<button class="notes-btn" onclick="openNotesModal('${ramoId}', '${ramo.nombre}')" title="Ver/Editar notas">
+                  <i class="fa-solid fa-note-sticky"></i>
+                </button>` : ''}
+                <span class="checkmark"><i class="fa-solid fa-check-circle"></i></span>
+              </div>
+            `;
+
+            if (usuarioActual) {
+              // Click para marcar/desmarcar SOLO si está logueado (evitando el área de botones)
+              li.addEventListener("click", (e) => {
+                // No activar si se hace clic en los botones de acciones
+                if (e.target.closest('.subject-actions')) return;
+                
+                let nuevoEstado = { ...getEstadoRamos() };
+                if (!li.classList.contains("checked")) {
+                  nuevoEstado[ramoId] = true;
+                  li.classList.add("checked");
+                } else {
+                  delete nuevoEstado[ramoId];
+                  li.classList.remove("checked");
+                }
+                setEstadoRamos(nuevoEstado);
+              });
+              li.style.opacity = "";
+              li.style.cursor = "pointer";
+              li.title = "";
+              li.tabIndex = 0;
+            } else {
+              // Si NO hay usuario, se ve desactivado y NO permite click
+              li.style.opacity = "0.6";
+              li.style.cursor = "not-allowed";
+              li.title = "Inicia sesión para marcar tus ramos";
+              li.tabIndex = -1;
+            }
+
+            rList.appendChild(li);
+          });
+
+          bCard.appendChild(rList);
+          bRow.appendChild(bCard);
+        });
+        block.appendChild(bRow);
+        cont.appendChild(block);
+      });
+    }
+
+    // Inicialización y listeners de auth
+    let unsubscribeRamos = null;
+    auth.onAuthStateChanged(user => {
+      usuarioActual = user;
+      renderLoginBar(user);
+      if (unsubscribeRamos) unsubscribeRamos();
+      if (user) {
+        unsubscribeRamos = listenEstadoRamos(user.uid);
+      } else {
+        estadoRamosCache = {};
+        notasRamosCache = {};
+        renderMalla();
+      }
+    });
+
+    // Inicializar (para no logueados)
+    document.addEventListener("DOMContentLoaded", () => {
+      if (!usuarioActual) renderMalla();
+    });
+  </script>
 </body>
 </html>
